@@ -8,6 +8,8 @@ from torchvision.datasets import CIFAR100
 from torchvision.datasets import MNIST
 from torch.utils.data import DataLoader
 
+SAVED_DATASETS_PATH = ""
+
 def get_features(dataset, batch_size=100):
     """
     Extracts image embeddings/features from a dataset using the CLIP model.
@@ -62,8 +64,8 @@ def get_CIFAR10_features():
     test_features, test_labels = None, None
 
     # Extracted features file paths names
-    train_feature_file = 'CIFAR10_CLIP_image_train.npz'
-    test_feature_file = 'CIFAR10_CLIP_image_test.npz'
+    train_feature_file = SAVED_DATASETS_PATH + 'CIFAR10_CLIP_image_train.npz'
+    test_feature_file = SAVED_DATASETS_PATH + 'CIFAR10_CLIP_image_test.npz'
 
     # Load extracted features if possible, else call CLIP and save to disk
     if os.path.exists(train_feature_file) and os.path.exists(test_feature_file):
@@ -102,8 +104,8 @@ def get_CIFAR100_features():
     test_features, test_labels = None, None
 
     # Extracted features file paths names
-    train_feature_file = 'CIFAR100_CLIP_image_train.npz'
-    test_feature_file = 'CIFAR100_CLIP_image_test.npz'
+    train_feature_file = SAVED_DATASETS_PATH + 'CIFAR100_CLIP_image_train.npz'
+    test_feature_file = SAVED_DATASETS_PATH + 'CIFAR100_CLIP_image_test.npz'
 
     # saving to file names
     print(f"Extracting features from CIFAR100 dataset")
@@ -146,8 +148,8 @@ def get_MNIST_features():
     test_features, test_labels = None, None
 
     # Extracted features file paths names
-    train_feature_file = 'MNIST_CLIP_image_train.npz'
-    test_feature_file = 'MNIST_CLIP_image_test.npz'
+    train_feature_file = SAVED_DATASETS_PATH + 'MNIST_CLIP_image_train.npz'
+    test_feature_file = SAVED_DATASETS_PATH + 'MNIST_CLIP_image_test.npz'
 
     # Load extracted features if possible, else call CLIP and save to disk
     if os.path.exists(train_feature_file) and os.path.exists(test_feature_file):
