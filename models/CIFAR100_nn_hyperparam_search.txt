@@ -9,3 +9,9 @@ Best Parameters Found:
 {'dropout_p1': 0.5253554572783057, 'dropout_p2': 0.5851059705301832, 'lr': 0.00011730797198485153, 'weight_decay': 0.0013219888016557314}
 Best Validation Loss: 0.6683
 Test Accuracy with Best Params: 80.10%
+
+=== Random Hyperparameter Search Completed ===
+Best Parameters Found:
+{'dropout_p1': 0.4620276943343561, 'dropout_p2': 0.3713145195128027, 'lr': 2.527916601246346e-05, 'weight_decay': 0.000577130244443391}
+Best Validation Loss: 0.6552
+Test Accuracy with Best Params: 80.55%
