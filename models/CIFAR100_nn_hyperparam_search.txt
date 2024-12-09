@@ -1,0 +1,11 @@
+=== Hyperparameter Search Completed ===
+Best Parameters Found:
+{'dropout_p1': 0.4, 'dropout_p2': 0.3, 'lr': 0.001, 'weight_decay': 0.0001}
+Best Validation Loss: 0.7604
+Test Accuracy with Best Params: 78.68%
+
+=== Random Hyperparameter Search Completed ===
+Best Parameters Found:
+{'dropout_p1': 0.5253554572783057, 'dropout_p2': 0.5851059705301832, 'lr': 0.00011730797198485153, 'weight_decay': 0.0013219888016557314}
+Best Validation Loss: 0.6683
+Test Accuracy with Best Params: 80.10%
