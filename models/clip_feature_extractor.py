@@ -228,9 +228,9 @@ def get_CIFAR10_features_OpenCLIP( model_name='ViT-H-14-378-quickgelu', pretrain
     batch_size: int
 
     returns:
-    train_features: numpy array of shape (50000, D)
+    train_features: numpy array of shape (50000, 1024) D = 1024 for default model
     train_labels: numpy array of shape (50000,)
-    test_features: numpy array of shape (10000, D)
+    test_features: numpy array of shape (10000, 1024) D = 1024 for default model
     test_labels: numpy array of shape (10000,)
     """
     root = os.path.expanduser("~/.cache")
@@ -270,9 +270,9 @@ def get_CIFAR100_features_OpenCLIP( model_name='ViT-H-14-378-quickgelu', pretrai
     batch_size: int
 
     returns:
-    train_features: numpy array of shape (50000, D)
+    train_features: numpy array of shape (50000, 1024) D = 1024 for default model
     train_labels: numpy array of shape (50000,)
-    test_features: numpy array of shape (10000, D)
+    test_features: numpy array of shape (10000, 1024) D = 1024 for default model
     test_labels: numpy array of shape (10000,)
     """
     root = os.path.expanduser("~/.cache")
@@ -282,6 +282,48 @@ def get_CIFAR100_features_OpenCLIP( model_name='ViT-H-14-378-quickgelu', pretrai
     # Extracted features file paths
     train_feature_file = os.path.join(SAVED_DATASETS_PATH, f'CIFAR100_OpenCLIP_{model_name}_train.npz')
     test_feature_file = os.path.join(SAVED_DATASETS_PATH, f'CIFAR100_OpenCLIP_{model_name}_test.npz')
+
+    if os.path.exists(train_feature_file) and os.path.exists(test_feature_file):
+        train_data = np.load(train_feature_file)
+        train_features = train_data['features']
+        train_labels = train_data['labels']
+
+        test_data = np.load(test_feature_file)
+        test_features = test_data['features']
+        test_labels = test_data['labels']
+        print("Loaded OpenCLIP features from disk.")
+    else:
+        train_features, train_labels = get_features_OpenCLIP(train, model_name, pretrained, batch_size)
+        test_features, test_labels = get_features_OpenCLIP(test, model_name, pretrained, batch_size)
+
+        np.savez(train_feature_file, features=train_features, labels=train_labels)
+        np.savez(test_feature_file, features=test_features, labels=test_labels)
+        print("Extracted and saved OpenCLIP features to disk.")
+
+    return train_features, train_labels, test_features, test_labels
+
+def get_MNIST_features_OpenCLIP( model_name='ViT-H-14-378-quickgelu', pretrained='dfn5b', batch_size=100):
+    """
+    Extracts image embeddings/features from the MNIST dataset using an OpenCLIP model.
+
+    ---
+    model_name: str, the OpenCLIP model name
+    pretrained: str, the OpenCLIP pretrained weights
+    batch_size: int
+
+    returns:
+    train_features: numpy array of shape (60000, 1024) D = 1024 for default model
+    train_labels: numpy array of shape (60000,)
+    test_features: numpy array of shape (10000, 1024) D = 1024 for default model
+    test_labels: numpy array of shape (10000,)
+    """
+    root = os.path.expanduser("~/.cache")
+    train = MNIST(root, download=True, train=True)
+    test = MNIST(root, download=True, train=False)
+
+    # Extracted features file paths
+    train_feature_file = os.path.join(SAVED_DATASETS_PATH, f'MNIST_OpenCLIP_{model_name}_train.npz')
+    test_feature_file = os.path.join(SAVED_DATASETS_PATH, f'MNIST_OpenCLIP_{model_name}_test.npz')
 
     if os.path.exists(train_feature_file) and os.path.exists(test_feature_file):
         train_data = np.load(train_feature_file)
